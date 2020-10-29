@@ -9,6 +9,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'lisposter/vim-blackboard'
 Plug 'morhetz/gruvbox'
 set background=dark
+let g:gruvbox_contrast_dark='hard'
 
 Plug 'scrooloose/nerdtree'
 let g:NERDTreeShowHidden = 1
@@ -46,7 +47,7 @@ Plug 'vim-utils/vim-man'
 Plug 'tpope/vim-fugitive'
 
 Plug 'mbbill/undotree'
-nnoremap <leader>u :UndotreeShow<CR>
+nnoremap <leader>u :UndotreeToggle<CR>
 
 " Needs livedown to be installed: `npm install -g livedown`:w
 " Note that it toggles the server. You can kill with :LivedownKill
@@ -58,6 +59,8 @@ nnoremap <leader>ld :LivedownToggle<CR>
 Plug 'michaeljsmith/vim-indent-object'
 
 Plug 'severin-lemaignan/vim-minimap'
+
+Plug 'qpkorr/vim-bufkill'
 
 call plug#end()
 
@@ -107,6 +110,7 @@ nnoremap <leader>h :wincmd h<CR>
 nnoremap <leader>j :wincmd j<CR>
 nnoremap <leader>k :wincmd k<CR>
 nnoremap <leader>l :wincmd l<CR>
+nnoremap <leader>q :BD<CR>
 nnoremap <leader>- :vertical resize -10<CR>
 nnoremap <leader>+ :vertical resize +10<CR>
 
