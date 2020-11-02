@@ -23,7 +23,7 @@ nnoremap <silent> <C-b> :NERDTreeToggle<CR>
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-nnoremap <C-p> :FZF<CR>
+nnoremap <C-p> :GFiles<CR>
 let $FZF_DEFAULT_OPTS='--reverse'
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
@@ -33,7 +33,7 @@ let g:fzf_action = {
 if executable('rg')
     let g:rg_derive_root='true'
 endif
-nnoremap <leader>ws :Rg <C-R>=expand("<cword>>")<CR>
+nnoremap <leader>ws :Rg <C-R>=expand("<cword>>")<CR><CR>
 
 Plug 'editorconfig/editorconfig-vim'
 
@@ -58,11 +58,16 @@ nnoremap <leader>md :LivedownToggle<CR>
 " level. Good for python
 Plug 'michaeljsmith/vim-indent-object'
 
-" Plug 'severin-lemaignan/vim-minimap'
-
-Plug 'qpkorr/vim-bufkill'
-
 Plug 'airblade/vim-rooter'
+
+Plug 'fholgado/minibufexpl.vim'
+nnoremap <leader>qw :MBEbd<CR>
+" nnoremap <C-n> :buffers<CR>:b
+nnoremap <C-n> :MBEFocus<CR>
+let g:miniBufExplVSplit = 40
+let g:miniBufExplBuffersNeeded = 0
+let g:miniBufExplShowBufNumbers = 0
+
 
 call plug#end()
 
@@ -102,17 +107,14 @@ autocmd FileType markdown,log,txt setlocal wrap
 nmap n /<CR>
 nmap N ?<CR>
 
-" Change buffers on Ctrl+n, similar to ReSharper
-nnoremap <C-n> :buffers<CR>:b
-
 " Automatically reload changed files
 set autoread
+autocmd CursorHold * checktime
 
 nnoremap <leader>h :wincmd h<CR>
 nnoremap <leader>j :wincmd j<CR>
 nnoremap <leader>k :wincmd k<CR>
 nnoremap <leader>l :wincmd l<CR>
-nnoremap <leader>q :BD<CR>
 nnoremap <leader>- :vertical resize -10<CR>
 nnoremap <leader>+ :vertical resize +10<CR>
 
