@@ -40,7 +40,7 @@ Plug 'editorconfig/editorconfig-vim'
 " Autocomplete and supersearch!
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 source $HOME/.config/nvim/coc.vim
-nnoremap <leader>prw :CocSearch <C-R>=expand("<cword>")<CR><CR>
+nnoremap <leader>pws :CocSearch <C-R>=expand("<cword>")<CR><CR>
 
 Plug 'vim-utils/vim-man'
 
@@ -52,15 +52,17 @@ nnoremap <leader>u :UndotreeToggle<CR>
 " Needs livedown to be installed: `npm install -g livedown`:w
 " Note that it toggles the server. You can kill with :LivedownKill
 Plug 'shime/vim-livedown'
-nnoremap <leader>ld :LivedownToggle<CR>
+nnoremap <leader>md :LivedownToggle<CR>
 
 " Adds an indentation test object, e.g. use dii to delete current indentation
 " level. Good for python
 Plug 'michaeljsmith/vim-indent-object'
 
-Plug 'severin-lemaignan/vim-minimap'
+" Plug 'severin-lemaignan/vim-minimap'
 
 Plug 'qpkorr/vim-bufkill'
+
+Plug 'airblade/vim-rooter'
 
 call plug#end()
 
