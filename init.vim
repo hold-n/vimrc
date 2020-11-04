@@ -6,10 +6,14 @@ Plug 'tpope/vim-commentary'
 "Plug 'jiangmiao/auto-pairs'
 
 Plug 'vim-airline/vim-airline'
+
 Plug 'lisposter/vim-blackboard'
+
 Plug 'morhetz/gruvbox'
-set background=dark
 let g:gruvbox_contrast_dark='hard'
+
+Plug 'rakr/vim-one'
+let g:one_allow_italics = 1
 
 Plug 'scrooloose/nerdtree'
 let g:NERDTreeShowHidden = 1
@@ -40,7 +44,7 @@ Plug 'editorconfig/editorconfig-vim'
 " Autocomplete and supersearch!
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 source $HOME/.config/nvim/coc.vim
-nnoremap <leader>pws :CocSearch <C-R>=expand("<cword>")<CR><CR>
+nnoremap <leader>pws :CocSearch <C-R>=expand("<cword>")<CR>
 
 Plug 'vim-utils/vim-man'
 
@@ -65,13 +69,25 @@ nnoremap <leader>qw :MBEbd<CR>
 " nnoremap <C-n> :buffers<CR>:b
 nnoremap <C-n> :MBEFocus<CR>
 let g:miniBufExplVSplit = 40
-let g:miniBufExplBuffersNeeded = 0
 let g:miniBufExplShowBufNumbers = 0
 
+Plug 'pangloss/vim-javascript'
+
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-speeddating'
+
+Plug 'svermeulen/vim-cutlass'
+nnoremap x d
+xnoremap x d
+nnoremap xx dd
+nnoremap X D
 
 call plug#end()
 
 set termguicolors
+set background=light
 colorscheme blackboard
 syntax enable
 
@@ -96,6 +112,7 @@ set noswapfile
 set nobackup
 set undodir=~/.vim/undodir
 set undofile
+set colorcolumn=90,125
 
 " Trims trailing whitespace on save
 autocmd BufWritePre * %s/\s\+$//e
