@@ -8,12 +8,12 @@ Plug 'tpope/vim-commentary'
 Plug 'vim-airline/vim-airline'
 
 Plug 'lisposter/vim-blackboard'
-
 Plug 'morhetz/gruvbox'
 let g:gruvbox_contrast_dark='hard'
-
 Plug 'rakr/vim-one'
 let g:one_allow_italics = 1
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'kkga/vim-envy'
 
 Plug 'scrooloose/nerdtree'
 let g:NERDTreeShowHidden = 1
@@ -69,9 +69,11 @@ nnoremap <leader>qw :MBEbd<CR>
 " nnoremap <C-n> :buffers<CR>:b
 nnoremap <C-n> :MBEFocus<CR>
 let g:miniBufExplVSplit = 40
-let g:miniBufExplShowBufNumbers = 0
+" let g:miniBufExplShowBufNumbers = 0
 
 Plug 'pangloss/vim-javascript'
+Plug 'vim-python/python-syntax'
+let g:python_highlight_all = 1
 
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-surround'
@@ -118,7 +120,7 @@ set colorcolumn=90,125
 autocmd BufWritePre * %s/\s\+$//e
 
 set nowrap
-autocmd FileType markdown,log,txt setlocal wrap
+autocmd FileType markdown,log,txt setlocal wrap linebreak
 
 " Ensures consistent n and N search direction
 nmap n /<CR>
