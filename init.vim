@@ -37,7 +37,12 @@ let g:fzf_action = {
 if executable('rg')
     let g:rg_derive_root='true'
 endif
+vnoremap <leader>fs "zy:BLines! <C-R>z<CR>
+vnoremap <leader>ws "zy:Rg! <C-R>z<CR>
 nnoremap <leader>ws :Rg <C-R>=expand("<cword>>")<CR><CR>
+nnoremap <leader>fs :BLines!<CR>
+nnoremap <leader>gs :Rg!<CR>
+nnoremap <leader>fc :Commands!<CR>
 
 Plug 'editorconfig/editorconfig-vim'
 
@@ -65,7 +70,8 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'airblade/vim-rooter'
 
 Plug 'fholgado/minibufexpl.vim'
-nnoremap <leader>qw :MBEbd<CR>
+nnoremap <leader>qb :MBEbd<CR>
+nnoremap <leader>qw :MBEbd<CR>:q<CR>
 " nnoremap <C-n> :buffers<CR>:b
 nnoremap <C-n> :MBEFocus<CR>
 let g:miniBufExplVSplit = 40
@@ -85,6 +91,13 @@ nnoremap x d
 xnoremap x d
 nnoremap xx dd
 nnoremap X D
+
+Plug 'nathanaelkane/vim-indent-guides'
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_guide_size = 1
+let g:indent_guides_start_level = 2
+
+Plug 'mhinz/vim-startify'
 
 call plug#end()
 
@@ -137,6 +150,8 @@ nnoremap <leader>l :wincmd l<CR>
 nnoremap <leader>- :vertical resize -10<CR>
 nnoremap <leader>+ :vertical resize +10<CR>
 
+nnoremap <leader>wr "zyiw:%s/<C-R>z//g<Left><Left>
+vnoremap <leader>wr "zy:%s/<C-R>z//g<Left><Left>
 nnoremap <leader>e <C-^>
 vnoremap <leader>p "_dP
 
