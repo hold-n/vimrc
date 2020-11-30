@@ -99,6 +99,12 @@ let g:indent_guides_start_level = 2
 
 Plug 'mhinz/vim-startify'
 
+Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' }
+
+Plug 'jmckiern/vim-venter'
+
+Plug 'andymass/vim-matchup'
+
 call plug#end()
 
 set termguicolors
@@ -154,6 +160,10 @@ nnoremap <leader>wr "zyiw:%s/<C-R>z//g<Left><Left>
 vnoremap <leader>wr "zy:%s/<C-R>z//g<Left><Left>
 nnoremap <leader>e <C-^>
 vnoremap <leader>p "_dP
+" Horizontally center cursor position.
+" Does not move the cursor itself (except for 'sidescrolloff' at the window
+" border).
+nnoremap <silent> z. :<C-u>normal! zszH<CR>
 
 nnoremap <silent><leader>json :%!python -m json.tool<CR>
 
