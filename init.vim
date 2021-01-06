@@ -86,7 +86,9 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
 
+" Stops the usual 'delete' commands from modifying registers.
 Plug 'svermeulen/vim-cutlass'
+" Sets x to be 'cut'
 nnoremap x d
 xnoremap x d
 nnoremap xx dd
@@ -118,7 +120,6 @@ set nu rnu
 set ignorecase
 set hlsearch
 set smartcase
-
 "This unsets the "last search pattern" register by hitting return
 nnoremap <CR> :noh<CR>
 
@@ -139,7 +140,7 @@ set colorcolumn=90,125
 autocmd BufWritePre * %s/\s\+$//e
 
 set nowrap
-autocmd FileType markdown,log,txt setlocal wrap linebreak
+autocmd FileType markdown,log,txt setlocal wrap linebreak textwidth=100
 
 " Ensures consistent n and N search direction
 nmap n /<CR>
@@ -156,14 +157,18 @@ nnoremap <leader>l :wincmd l<CR>
 nnoremap <leader>- :vertical resize -10<CR>
 nnoremap <leader>+ :vertical resize +10<CR>
 
+" word replace
 nnoremap <leader>wr "zyiw:%s/<C-R>z//g<Left><Left>
 vnoremap <leader>wr "zy:%s/<C-R>z//g<Left><Left>
+
 nnoremap <leader>e <C-^>
 vnoremap <leader>p "_dP
+
 " Horizontally center cursor position.
 " Does not move the cursor itself (except for 'sidescrolloff' at the window
 " border).
 nnoremap <silent> z. :<C-u>normal! zszH<CR>
 
+" format json
 nnoremap <silent><leader>json :%!python -m json.tool<CR>
 
