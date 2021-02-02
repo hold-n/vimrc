@@ -107,6 +107,8 @@ Plug 'jmckiern/vim-venter'
 
 Plug 'andymass/vim-matchup'
 
+Plug 'kongo2002/fsharp-vim'
+
 call plug#end()
 
 set termguicolors
@@ -116,6 +118,7 @@ syntax enable
 
 set number relativenumber
 set nu rnu
+set cursorline
 
 set ignorecase
 set hlsearch
