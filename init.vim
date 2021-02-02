@@ -1,6 +1,6 @@
 let mapleader = " "
 
-call plug#begin(stdpath('data') . '/plugged')
+call plug#begin('~/AppData/Local/nvim/plugged')
 
 Plug 'tpope/vim-commentary'
 "Plug 'jiangmiao/auto-pairs'
@@ -64,7 +64,7 @@ Plug 'editorconfig/editorconfig-vim'
 
 " Autocomplete and supersearch!
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-source $HOME/.config/nvim/coc.vim
+source $HOME/AppData/Local/nvim/coc.vim
 nnoremap <leader>pws :CocSearch <C-R>=expand("<cword>")<CR>
 
 Plug 'vim-utils/vim-man'
