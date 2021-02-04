@@ -138,6 +138,8 @@ set nobackup
 set undodir=~/.vim/undodir
 set undofile
 set colorcolumn=90,125
+set foldmethod=indent
+set foldlevel=9999
 
 " Trims trailing whitespace on save
 autocmd BufWritePre * %s/\s\+$//e
