@@ -22,14 +22,24 @@ let g:NERDTreeIgnore = []
 let g:NERDTreeStatusline = ''
 " Automaticaly close nvim if NERDTree is only thing left open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-" Toggle
 nnoremap <silent> <C-b> :NERDTreeToggle<CR>
+
+" ---------------------------
+" FZF
+" ---------------------------
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-nnoremap <C-p> :GFiles<CR>
-let $FZF_DEFAULT_OPTS='--reverse'
+function! s:build_quickfix_list(lines)
+  call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+  copen
+  cc
+endfunction
+
+let $FZF_DEFAULT_OPTS='--reverse --bind ctrl-a:select-all'
+" CTRL-A CTRL-Q to select all and build quickfix list
 let g:fzf_action = {
+  \ 'ctrl-q': function('s:build_quickfix_list'),
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-s': 'split',
   \ 'ctrl-v': 'vsplit'
@@ -37,12 +47,18 @@ let g:fzf_action = {
 if executable('rg')
     let g:rg_derive_root='true'
 endif
+
+nnoremap <C-p> :GFiles<CR>
 vnoremap <leader>fs "zy:BLines! <C-R>z<CR>
 vnoremap <leader>ws "zy:Rg! <C-R>z<CR>
-nnoremap <leader>ws :Rg <C-R>=expand("<cword>>")<CR><CR>
+nnoremap <leader>ws :Rg <C-R>=expand("<cword>")<CR><CR>
 nnoremap <leader>fs :BLines!<CR>
 nnoremap <leader>gs :Rg!<CR>
 nnoremap <leader>fc :Commands!<CR>
+"
+" ---------------------------
+" FZF END
+" ---------------------------
 
 Plug 'editorconfig/editorconfig-vim'
 
@@ -177,4 +193,8 @@ nnoremap <silent> z. :<C-u>normal! zszH<CR>
 
 " format json
 nnoremap <silent><leader>json :%!python -m json.tool<CR>
+vnoremap <silent><leader>json :'<,'>!python -m json.tool<CR>
+
+nnoremap <silent> <C-j> :cnext<CR>
+nnoremap <silent> <C-k> :cprev<CR>
 
