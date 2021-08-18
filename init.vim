@@ -91,6 +91,7 @@ nnoremap <leader>qw :MBEbd<CR>:q<CR>
 " nnoremap <C-n> :buffers<CR>:b
 nnoremap <C-n> :MBEFocus<CR>
 let g:miniBufExplVSplit = 40
+let g:miniBufExplAutoStart = 0
 " let g:miniBufExplShowBufNumbers = 0
 
 Plug 'pangloss/vim-javascript'
@@ -157,6 +158,7 @@ set undofile
 set colorcolumn=90,125
 set foldmethod=indent
 set foldlevel=9999
+set list
 
 " Trims trailing whitespace on save
 autocmd BufWritePre * %s/\s\+$//e
