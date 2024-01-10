@@ -142,7 +142,7 @@ set ignorecase
 set hlsearch
 set smartcase
 "This unsets the "last search pattern" register by hitting return
-nnoremap <CR> :noh<CR>
+" nnoremap <CR> :noh<CR>
 
 set expandtab
 set shiftwidth=4
@@ -194,9 +194,10 @@ vnoremap <leader>p "_dP
 nnoremap <silent> z. :<C-u>normal! zszH<CR>
 
 " format json
-nnoremap <silent><leader>json :%!python -m json.tool<CR>
-vnoremap <silent><leader>json :'<,'>!python -m json.tool<CR>
+nnoremap <silent><leader>json :%!python3 -m json.tool<CR>
+vnoremap <silent><leader>json :'<,'>!python3 -m json.tool<CR>
 
 nnoremap <silent> <C-j> :cnext<CR>
 nnoremap <silent> <C-k> :cprev<CR>
 
+Plug 'ssh://git.amazon.com:2222/pkg/Vim-code-browse', {'branch': 'mainline'}
