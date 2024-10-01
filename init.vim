@@ -70,6 +70,7 @@ nnoremap <leader>pws :CocSearch <C-R>=expand("<cword>")<CR>
 Plug 'vim-utils/vim-man'
 
 Plug 'tpope/vim-fugitive'
+source $HOME/.config/nvim/fugitive-gitfarm.vim
 
 Plug 'mbbill/undotree'
 nnoremap <leader>u :UndotreeToggle<CR>
@@ -200,4 +201,3 @@ vnoremap <silent><leader>json :'<,'>!python3 -m json.tool<CR>
 nnoremap <silent> <C-j> :cnext<CR>
 nnoremap <silent> <C-k> :cprev<CR>
 
-Plug 'ssh://git.amazon.com:2222/pkg/Vim-code-browse', {'branch': 'mainline'}
