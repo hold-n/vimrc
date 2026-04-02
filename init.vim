@@ -14,6 +14,7 @@ Plug 'rakr/vim-one'
 let g:one_allow_italics = 1
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'kkga/vim-envy'
+Plug 'dchinmay2/alabaster.nvim'
 
 " --- UI ---
 Plug 'nvim-lualine/lualine.nvim'
@@ -81,7 +82,7 @@ call plug#end()
 
 set termguicolors
 set background=dark
-colorscheme blackboard
+colorscheme alabaster
 syntax enable
 set number relativenumber
 set cursorline
@@ -169,8 +170,7 @@ nnoremap <leader>gs :Rg!<CR>
 nnoremap <leader>fc :Commands!<CR>
 
 " --- Buffers ---
-nnoremap <leader>qb :bp\|bd #<CR>
-nnoremap <leader>qw :bd<CR>:q<CR>
+nnoremap <leader>qb :bnext\|bdelete #<CR>
 nnoremap <C-n> :Buffers<CR>
 
 " --- File tree ---
@@ -270,7 +270,7 @@ require('neo-tree').setup({
   default_component_configs = {
     icon = { enabled = false },
   },
-  sources = { 'filesystem', 'buffers', 'git_status' },
+  sources = { 'filesystem', 'buffers' },
   filesystem = {
     filtered_items = { visible = true },
   },
@@ -296,7 +296,6 @@ require('neo-tree').setup({
     sources = {
       { source = 'filesystem', display_name = ' Files' },
       { source = 'buffers', display_name = ' Buffers' },
-      { source = 'git_status', display_name = ' Git' },
     },
   },
 })
