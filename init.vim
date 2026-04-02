@@ -162,6 +162,12 @@ set colorcolumn=90,125
 set foldmethod=syntax
 set foldlevel=9999
 set list
+set listchars=tab:→\ ,trail:·,extends:…,precedes:…,nbsp:␣
+set signcolumn=yes
+set updatetime=250
+set scrolloff=8
+set splitbelow
+set inccommand=split
 
 " Trims trailing whitespace on save
 autocmd BufWritePre * %s/\s\+$//e
@@ -176,6 +182,8 @@ nnoremap N Nzzzv
 " Automatically reload changed files
 set autoread
 autocmd CursorHold * checktime
+
+autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | endif
 
 nnoremap <leader>h :wincmd h<CR>
 nnoremap <leader>j :wincmd j<CR>
@@ -231,6 +239,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
     vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
     vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
+    vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, opts)
   end,
 })
 EOF
