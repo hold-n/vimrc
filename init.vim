@@ -56,9 +56,7 @@ nnoremap <leader>fc :Commands!<CR>
 " FZF END
 " ---------------------------
 
-Plug 'editorconfig/editorconfig-vim'
 
-Plug 'vim-utils/vim-man'
 
 Plug 'tpope/vim-fugitive'
 source $HOME/.config/nvim/fugitive-gitfarm.vim
@@ -115,7 +113,7 @@ Plug 'jmckiern/vim-venter'
 
 Plug 'kongo2002/fsharp-vim'
 
-Plug 'ojroques/vim-oscyank', {'branch': 'main'} " uses OSC52 to copy to system clipboard via SSH
+
 
 
 
@@ -259,8 +257,6 @@ require('nvim-treesitter.configs').setup({
     },
   },
 })
-
-require('treesitter-context').setup()
 
 require('neo-tree').setup({
   default_component_configs = {
