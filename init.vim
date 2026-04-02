@@ -62,11 +62,6 @@ nnoremap <leader>fc :Commands!<CR>
 
 Plug 'editorconfig/editorconfig-vim'
 
-" Autocomplete and supersearch!
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-source $HOME/.config/nvim/coc.vim
-nnoremap <leader>pws :CocSearch <C-R>=expand("<cword>")<CR>
-
 Plug 'vim-utils/vim-man'
 
 Plug 'tpope/vim-fugitive'
@@ -113,20 +108,27 @@ nnoremap xx dd
 nnoremap X D
 
 Plug 'nathanaelkane/vim-indent-guides'
-let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_guide_size = 1
-let g:indent_guides_start_level = 2
+if !exists('g:vscode')
+  let g:indent_guides_enable_on_vim_startup = 1
+  let g:indent_guides_guide_size = 1
+  let g:indent_guides_start_level = 2
+endif
 
 Plug 'mhinz/vim-startify'
 let NERDTreeHijackNetrw = 0
 
-Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' }
+" Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' }
 
 Plug 'jmckiern/vim-venter'
 
-Plug 'andymass/vim-matchup'
+" Plug 'andymass/vim-matchup'
 
 Plug 'kongo2002/fsharp-vim'
+
+Plug 'ojroques/vim-oscyank', {'branch': 'main'} " uses OSC52 to copy to system clipboard via SSH
+
+Plug 'neovim/nvim-lspconfig'
+
 
 call plug#end()
 
@@ -140,7 +142,9 @@ set nu rnu
 set cursorline
 
 set ignorecase
-set hlsearch
+if !exists('g:vscode')
+    set hlsearch
+endif
 set smartcase
 "This unsets the "last search pattern" register by hitting return
 " nnoremap <CR> :noh<CR>
@@ -157,7 +161,7 @@ set nobackup
 set undodir=~/.vim/undodir
 set undofile
 set colorcolumn=90,125
-set foldmethod=indent
+set foldmethod=syntax
 set foldlevel=9999
 set list
 
@@ -200,4 +204,3 @@ vnoremap <silent><leader>json :'<,'>!python3 -m json.tool<CR>
 
 nnoremap <silent> <C-j> :cnext<CR>
 nnoremap <silent> <C-k> :cprev<CR>
-
