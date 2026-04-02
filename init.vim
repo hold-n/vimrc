@@ -5,7 +5,7 @@ call plug#begin(stdpath('data') . '/plugged')
 Plug 'tpope/vim-commentary'
 "Plug 'jiangmiao/auto-pairs'
 
-Plug 'vim-airline/vim-airline'
+Plug 'nvim-lualine/lualine.nvim'
 
 Plug 'lisposter/vim-blackboard'
 Plug 'morhetz/gruvbox'
@@ -15,14 +15,10 @@ let g:one_allow_italics = 1
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'kkga/vim-envy'
 
-Plug 'scrooloose/nerdtree'
-let g:NERDTreeShowHidden = 1
-let g:NERDTreeMinimalUI = 1
-let g:NERDTreeIgnore = []
-let g:NERDTreeStatusline = ''
-" Automaticaly close nvim if NERDTree is only thing left open
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-nnoremap <silent> <C-b> :NERDTreeToggle<CR>
+Plug 'nvim-lua/plenary.nvim'
+Plug 'MunifTanjim/nui.nvim'
+Plug 'nvim-neo-tree/neo-tree.nvim', { 'branch': 'v3.x' }
+nnoremap <silent> <C-b> :Neotree toggle source=buffers dir=~<CR>
 
 " ---------------------------
 " FZF
@@ -81,18 +77,12 @@ Plug 'michaeljsmith/vim-indent-object'
 
 Plug 'airblade/vim-rooter'
 
-Plug 'fholgado/minibufexpl.vim'
-nnoremap <leader>qb :MBEbd<CR>
-nnoremap <leader>qw :MBEbd<CR>:q<CR>
-" nnoremap <C-n> :buffers<CR>:b
-nnoremap <C-n> :MBEFocus<CR>
-let g:miniBufExplVSplit = 40
-let g:miniBufExplAutoStart = 0
-" let g:miniBufExplShowBufNumbers = 0
+nnoremap <leader>qb :bp\|bd #<CR>
+nnoremap <leader>qw :bd<CR>:q<CR>
+nnoremap <C-n> :Buffers<CR>
 
-Plug 'pangloss/vim-javascript'
-Plug 'vim-python/python-syntax'
-let g:python_highlight_all = 1
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate', 'branch': 'master'}
+Plug 'nvim-treesitter/nvim-treesitter-textobjects', {'branch': 'master'}
 
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-surround'
@@ -115,7 +105,7 @@ if !exists('g:vscode')
 endif
 
 Plug 'mhinz/vim-startify'
-let NERDTreeHijackNetrw = 0
+
 
 " Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' }
 
@@ -159,7 +149,8 @@ set nobackup
 set undodir=~/.vim/undodir
 set undofile
 set colorcolumn=90,125
-set foldmethod=syntax
+set foldmethod=expr
+set foldexpr=v:lua.vim.treesitter.foldexpr()
 set foldlevel=9999
 set list
 set listchars=tab:→\ ,trail:·,extends:…,precedes:…,nbsp:␣
@@ -168,6 +159,8 @@ set updatetime=250
 set scrolloff=8
 set splitbelow
 set inccommand=split
+set lazyredraw
+set noshowmode
 
 " Trims trailing whitespace on save
 autocmd BufWritePre * %s/\s\+$//e
@@ -242,4 +235,67 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, opts)
   end,
 })
+
+require('nvim-treesitter.configs').setup({
+  ensure_installed = { 'python', 'typescript', 'javascript', 'java', 'lua', 'vim', 'vimdoc', 'markdown', 'bash', 'json', 'yaml' },
+  highlight = { enable = true },
+  indent = { enable = true },
+  textobjects = {
+    select = {
+      enable = true,
+      lookahead = true,
+      keymaps = {
+        ['af'] = '@function.outer',
+        ['if'] = '@function.inner',
+        ['ac'] = '@class.outer',
+        ['ic'] = '@class.inner',
+      },
+    },
+    move = {
+      enable = true,
+      set_jumps = true,
+      goto_next_start = { [']m'] = '@function.outer' },
+      goto_previous_start = { ['[m'] = '@function.outer' },
+    },
+  },
+})
+
+require('treesitter-context').setup()
+
+require('neo-tree').setup({
+  default_component_configs = {
+    icon = { enabled = false },
+  },
+  sources = { 'filesystem', 'buffers', 'git_status' },
+  filesystem = {
+    filtered_items = { visible = true },
+  },
+  buffers = {
+    show_unloaded = true,
+    group_empty_dirs = false,
+    bind_to_cwd = false,
+    follow_current_file = { enabled = true },
+    renderers = {
+      file = {
+        { 'indent' },
+        { 'name', use_git_status_colors = true },
+      },
+    },
+    window = {
+      mappings = {
+        ['d'] = 'buffer_delete',
+      },
+    },
+  },
+  source_selector = {
+    winbar = true,
+    sources = {
+      { source = 'filesystem', display_name = ' Files' },
+      { source = 'buffers', display_name = ' Buffers' },
+      { source = 'git_status', display_name = ' Git' },
+    },
+  },
+})
+
+require('lualine').setup()
 EOF
