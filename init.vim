@@ -270,17 +270,10 @@ require('bufferline').setup({
     show_buffer_close_icons = false,
     show_close_icon = false,
     separator_style = 'slant',
+    themable = true,
     pick = {
       alphabet = 'abcdefghijklmopqrstuvwxyz',
     },
-  },
-  highlights = {
-    fill = { bg = '#1a1a1a' },
-    background = { fg = '#ffffff', bg = '#2a2a2a' },
-    buffer_selected = { fg = '#e5c07b', bg = '#3a3a3a', bold = true },
-    separator = { fg = '#1a1a1a', bg = '#2a2a2a' },
-    separator_selected = { fg = '#1a1a1a', bg = '#3a3a3a' },
-    separator_visible = { fg = '#1a1a1a', bg = '#2a2a2a' },
   },
 })
 vim.keymap.set('n', '<C-l>', '<Cmd>BufferLineCycleNext<CR>')
