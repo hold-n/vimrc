@@ -26,11 +26,9 @@ if !exists('g:vscode')
   let g:indent_guides_start_level = 2
 endif
 Plug 'jmckiern/vim-venter'
+Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
 
 " --- File navigation ---
-Plug 'nvim-lua/plenary.nvim'
-Plug 'MunifTanjim/nui.nvim'
-Plug 'nvim-neo-tree/neo-tree.nvim', { 'branch': 'v3.x' }
 Plug 'airblade/vim-rooter'
 
 " --- FZF ---
@@ -171,10 +169,7 @@ nnoremap <leader>fc :Commands!<CR>
 
 " --- Buffers ---
 nnoremap <leader>qb :bnext\|bdelete #<CR>
-nnoremap <C-n> :Buffers<CR>
-
-" --- File tree ---
-nnoremap <silent> <C-b> :Neotree toggle source=buffers dir=~<CR>
+nnoremap <C-b> :Buffers<CR>
 
 " --- Cutlass (x = cut) ---
 nnoremap x d
@@ -265,40 +260,32 @@ require('nvim-treesitter.configs').setup({
   },
 })
 
--- Neo-tree
-require('neo-tree').setup({
-  default_component_configs = {
-    icon = { enabled = false },
-  },
-  sources = { 'filesystem', 'buffers' },
-  filesystem = {
-    filtered_items = { visible = true },
-  },
-  buffers = {
-    show_unloaded = true,
-    group_empty_dirs = false,
-    bind_to_cwd = false,
-    follow_current_file = { enabled = true },
-    renderers = {
-      file = {
-        { 'indent' },
-        { 'name', use_git_status_colors = true },
-      },
-    },
-    window = {
-      mappings = {
-        ['d'] = 'buffer_delete',
-      },
+-- Bufferline
+require('bufferline').setup({
+  options = {
+    mode = 'buffers',
+    max_name_length = 30,
+    tab_size = 25,
+    diagnostics = 'nvim_lsp',
+    show_buffer_close_icons = false,
+    show_close_icon = false,
+    separator_style = 'slant',
+    pick = {
+      alphabet = 'abcdefghijklmopqrstuvwxyz',
     },
   },
-  source_selector = {
-    winbar = true,
-    sources = {
-      { source = 'filesystem', display_name = ' Files' },
-      { source = 'buffers', display_name = ' Buffers' },
-    },
+  highlights = {
+    fill = { bg = '#1a1a1a' },
+    background = { fg = '#ffffff', bg = '#2a2a2a' },
+    buffer_selected = { fg = '#e5c07b', bg = '#3a3a3a', bold = true },
+    separator = { fg = '#1a1a1a', bg = '#2a2a2a' },
+    separator_selected = { fg = '#1a1a1a', bg = '#3a3a3a' },
+    separator_visible = { fg = '#1a1a1a', bg = '#2a2a2a' },
   },
 })
+vim.keymap.set('n', '<C-l>', '<Cmd>BufferLineCycleNext<CR>')
+vim.keymap.set('n', '<C-h>', '<Cmd>BufferLineCyclePrev<CR>')
+vim.keymap.set('n', '<C-n>', '<Cmd>BufferLinePick<CR>')
 
 -- Lualine
 require('lualine').setup()
