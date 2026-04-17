@@ -6,53 +6,61 @@ let mapleader = " "
 
 call plug#begin(stdpath('data') . '/plugged')
 
-" --- Colorschemes ---
-Plug 'lisposter/vim-blackboard'
-Plug 'morhetz/gruvbox'
-let g:gruvbox_contrast_dark='hard'
-Plug 'rakr/vim-one'
-let g:one_allow_italics = 1
-Plug 'NLKNguyen/papercolor-theme'
-Plug 'kkga/vim-envy'
-Plug 'dchinmay2/alabaster.nvim'
-
-" --- UI ---
-Plug 'nvim-lualine/lualine.nvim'
-Plug 'mhinz/vim-startify'
-Plug 'nathanaelkane/vim-indent-guides'
 if !exists('g:vscode')
+  " --- Colorschemes ---
+  Plug 'lisposter/vim-blackboard'
+  Plug 'morhetz/gruvbox'
+  let g:gruvbox_contrast_dark='hard'
+  Plug 'rakr/vim-one'
+  let g:one_allow_italics = 1
+  Plug 'NLKNguyen/papercolor-theme'
+  Plug 'kkga/vim-envy'
+  Plug 'dchinmay2/alabaster.nvim'
+  Plug 'danilo-augusto/vim-afterglow'
+  Plug 'ayu-theme/ayu-vim'
+  Plug 'jaredgorski/SpaceCamp'
+  Plug 'dikiaap/minimalist'
+
+  " --- UI ---
+  Plug 'nvim-lualine/lualine.nvim'
+  Plug 'mhinz/vim-startify'
+  Plug 'nathanaelkane/vim-indent-guides'
   let g:indent_guides_enable_on_vim_startup = 1
   let g:indent_guides_guide_size = 1
   let g:indent_guides_start_level = 2
+  Plug 'jmckiern/vim-venter'
+  Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
+
+  " --- File navigation ---
+  Plug 'airblade/vim-rooter'
+
+  " --- FZF ---
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+  Plug 'junegunn/fzf.vim'
+  function! s:build_quickfix_list(lines)
+    call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+    copen
+    cc
+  endfunction
+  let $FZF_DEFAULT_OPTS='--reverse --bind ctrl-a:select-all'
+  let g:fzf_action = {
+    \ 'ctrl-q': function('s:build_quickfix_list'),
+    \ 'ctrl-t': 'tab split',
+    \ 'ctrl-s': 'split',
+    \ 'ctrl-v': 'vsplit'
+    \}
+  if executable('rg')
+      let g:rg_derive_root='true'
+  endif
+
+  " --- Git ---
+  Plug 'tpope/vim-fugitive'
+  source $HOME/.config/nvim/fugitive-gitfarm.vim
+
+  " --- Misc ---
+  Plug 'mbbill/undotree'
+  Plug 'shime/vim-livedown'
 endif
-Plug 'jmckiern/vim-venter'
-Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
-
-" --- File navigation ---
-Plug 'airblade/vim-rooter'
-
-" --- FZF ---
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-function! s:build_quickfix_list(lines)
-  call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
-  copen
-  cc
-endfunction
-let $FZF_DEFAULT_OPTS='--reverse --bind ctrl-a:select-all'
-let g:fzf_action = {
-  \ 'ctrl-q': function('s:build_quickfix_list'),
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-s': 'split',
-  \ 'ctrl-v': 'vsplit'
-  \}
-if executable('rg')
-    let g:rg_derive_root='true'
-endif
-
-" --- Git ---
-Plug 'tpope/vim-fugitive'
-source $HOME/.config/nvim/fugitive-gitfarm.vim
 
 " --- Treesitter ---
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate', 'branch': 'master'}
@@ -68,8 +76,6 @@ Plug 'svermeulen/vim-cutlass'
 Plug 'michaeljsmith/vim-indent-object'
 
 " --- Misc ---
-Plug 'mbbill/undotree'
-Plug 'shime/vim-livedown'
 Plug 'kongo2002/fsharp-vim'
 
 call plug#end()
@@ -78,17 +84,19 @@ call plug#end()
 " Appearance
 " =============================================================================
 
-set termguicolors
-set background=dark
-colorscheme alabaster
-syntax enable
-set number relativenumber
-set cursorline
-set colorcolumn=90,125
-set signcolumn=yes
-set noshowmode
-set list
-set listchars=tab:→\ ,trail:·,extends:…,precedes:…,nbsp:␣
+if !exists('g:vscode')
+  set termguicolors
+  set background=dark
+  colorscheme alabaster
+  syntax enable
+  set number relativenumber
+  set cursorline
+  set colorcolumn=90,125
+  set signcolumn=yes
+  set noshowmode
+  set list
+  set listchars=tab:→\ ,trail:·,extends:…,precedes:…,nbsp:␣
+endif
 
 " =============================================================================
 " Editing
@@ -121,7 +129,7 @@ endif
 " =============================================================================
 
 set updatetime=250
-set scrolloff=8
+set scrolloff=5
 set splitbelow
 set lazyredraw
 set noswapfile
@@ -158,18 +166,20 @@ nnoremap <leader>e <C-^>
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
-" --- FZF ---
-nnoremap <C-p> :GFiles<CR>
-vnoremap <leader>fs "zy:BLines! <C-R>z<CR>
-vnoremap <leader>ws "zy:Rg! <C-R>z<CR>
-nnoremap <leader>ws :Rg <C-R>=expand("<cword>")<CR><CR>
-nnoremap <leader>fs :BLines!<CR>
-nnoremap <leader>gs :Rg!<CR>
-nnoremap <leader>fc :Commands!<CR>
+if !exists('g:vscode')
+  " --- FZF ---
+  nnoremap <C-p> :GFiles<CR>
+  vnoremap <leader>fs "zy:BLines! <C-R>z<CR>
+  vnoremap <leader>ws "zy:Rg! <C-R>z<CR>
+  nnoremap <leader>ws :Rg <C-R>=expand("<cword>")<CR><CR>
+  nnoremap <leader>fs :BLines!<CR>
+  nnoremap <leader>gs :Rg!<CR>
+  nnoremap <leader>fc :Commands!<CR>
 
-" --- Buffers ---
-nnoremap <leader>qb :bnext\|bdelete #<CR>
-nnoremap <C-b> :Buffers<CR>
+  " --- Buffers ---
+  nnoremap <leader>qb :bnext\|bdelete #<CR>
+  nnoremap <C-n> :Buffers<CR>
+endif
 
 " --- Cutlass (x = cut) ---
 nnoremap x d
@@ -177,9 +187,11 @@ xnoremap x d
 nnoremap xx dd
 nnoremap X D
 
-" --- Plugins ---
-nnoremap <leader>u :UndotreeToggle<CR>
-nnoremap <leader>md :LivedownToggle<CR>
+if !exists('g:vscode')
+  " --- Plugins ---
+  nnoremap <leader>u :UndotreeToggle<CR>
+  nnoremap <leader>md :LivedownToggle<CR>
+endif
 
 " --- Editing ---
 vnoremap <leader>p "_dP
@@ -201,6 +213,7 @@ vnoremap <silent><leader>json :'<,'>!python3 -m json.tool<CR>
 " LSP, Treesitter & Plugin configs (lua)
 " =============================================================================
 
+if !exists('g:vscode')
 lua << EOF
 -- LSP servers
 vim.lsp.config('ts_ls', {
@@ -264,6 +277,7 @@ require('nvim-treesitter.configs').setup({
 require('bufferline').setup({
   options = {
     mode = 'buffers',
+    numbers = 'buffer_id',
     max_name_length = 30,
     tab_size = 25,
     diagnostics = 'nvim_lsp',
@@ -278,8 +292,9 @@ require('bufferline').setup({
 })
 vim.keymap.set('n', '<C-l>', '<Cmd>BufferLineCycleNext<CR>')
 vim.keymap.set('n', '<C-h>', '<Cmd>BufferLineCyclePrev<CR>')
-vim.keymap.set('n', '<C-n>', '<Cmd>BufferLinePick<CR>')
+vim.keymap.set('n', '<C-b>', '<Cmd>BufferLinePick<CR>')
 
 -- Lualine
 require('lualine').setup()
 EOF
+endif
